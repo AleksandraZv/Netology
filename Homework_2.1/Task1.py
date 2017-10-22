@@ -10,11 +10,11 @@ def read_ingredients():
 
             for x in range(dish_ingredients):
                 ingredient = f.readline().strip().split(" | ") # — данные в читаемый вид
-                i = {'ingredient_name': ingredient[0], 'quantity': int(ingredient[1]), 'measure': ingredient[2]}
-                dish_info.append(i)
-                f.readline()
-                all_dishes.update({dish_key: dish_info})
-                print(all_dishes)
+                i = {'ingredient_name': ingredient[0], 'quantity': int(ingredient[1]), 'measure': ingredient[2]} # — разбили данные, задали тип
+                dish_info.append(i) # — включили в список
+                f.readline() # — прочитали строку
+                all_dishes.update({dish_key: dish_info}) # — ? как вышло что это ключ?
+                print(all_dishes) # — посмотрели
 
     return all_dishes, dish_ingredients
 
