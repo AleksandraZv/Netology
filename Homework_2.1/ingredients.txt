@@ -1,0 +1,17 @@
+scramble
+2
+eggs | 2 | p
+tomato | 100 | gr
+
+steak
+3
+beef | 300 | gr
+spice | 5 | gr
+oil | 10 | ml
+
+salad
+4
+tomato | 100 | gr
+cucumber | 100 | gr
+oil | 100 | ml
+onion | 1 | p
