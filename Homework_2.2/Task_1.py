@@ -1,34 +1,50 @@
 import chardet
-import re
-import string
-frequency = {}
+import operator
 
-def define_encoding():
+def define_encoding(filename):
 
-    with open('newscy.txt', 'rb') as f:
+    with open(filename, 'rb') as f:
         data = f.read()
         result = chardet.detect(data)
-        print(result)
+        return result
 
-def get_data():
+def get_data(filename, enc):
 
-    with open('newscy.txt', 'r', encoding='KOI8-R') as f:
+    with open(filename, encoding=enc['encoding']) as f:
         data = f.read().lower()
-        if word in data: # как написать, что если в данных есть слово больше 6 букв? Это регулярные выражения?
-            frequency_word = count + 1 # если есть значит считаем +1
-            # дальше мы мы должны написать что-то вроде если count = 10, то перенести это в словарь?
+        #print(data)
 
+        words = data.split(' ')
+        #print(words)
 
-        word_search = re.search(r'\b[а-я]{6-10}\b', data) # — этот вариант почему-то не работает
-        for word in word_search:
-            count = frequency.get(word,0)
-            frequency[word] = count + 1
+        word_dict = {}
+        for word in words:
+            if len(word) > 6:
+                if word in word_dict:
+                    word_dict[word] += 1
+                else:
+                    word_dict[word] = 1
 
-            frequency_list = frequency.keys()
+        #print(word_dict)
 
-            for words in frequency_list:
-                print (words, frequency[words])
+        sorted_word_dict = sorted(word_dict.items(), key=operator.itemgetter(1), reverse=True)
 
-define_encoding()
-get_data()
+        #print(sorted_word_dict)
 
+        print(sorted_word_dict[:10])
+
+filename = 'newsfr.txt'
+enc = define_encoding(filename)
+get_data(filename, enc)
+
+filename = 'newsit.txt'
+enc = define_encoding(filename)
+get_data(filename, enc)
+
+filename = 'newsafr.txt'
+enc = define_encoding(filename)
+get_data(filename, enc)
+
+filename = 'newscy.txt'
+enc = define_encoding(filename)
+get_data(filename, enc)
