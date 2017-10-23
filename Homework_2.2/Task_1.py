@@ -1,35 +1,34 @@
-import json
-from pprint import pprint
-import os
-from collections import Counter, defaultdict
+import chardet
 import re
+import string
+frequency = {}
+
+def define_encoding():
+
+    with open('newscy.txt', 'rb') as f:
+        data = f.read()
+        result = chardet.detect(data)
+        print(result)
+
+def get_data():
+
+    with open('newscy.txt', 'r', encoding='KOI8-R') as f:
+        data = f.read().lower()
+        if word in data: # как написать, что если в данных есть слово больше 6 букв? Это регулярные выражения?
+            frequency_word = count + 1 # если есть значит считаем +1
+            # дальше мы мы должны написать что-то вроде если count = 10, то перенести это в словарь?
 
 
-def get_ten_popular_words(data):
-    news_list = data['rss']['channel']['items']
-    words = []
-    for news in news_list:
-        words.extend(news['description'].split(' '))
-    freqword = defaultdict(list)
-    for word, freq in Counter(words).items():
-        if (len(word) > 6):
-            freqword[freq].append(word)
+        word_search = re.search(r'\b[а-я]{6-10}\b', data) # — этот вариант почему-то не работает
+        for word in word_search:
+            count = frequency.get(word,0)
+            frequency[word] = count + 1
 
-    for freq in sorted(freqword, reverse=True)[:10]:
-       print('count {}: {}'.format(freq, sorted(freqword[freq])))
+            frequency_list = frequency.keys()
 
-def get_data(filename):
-    with open(filename, 'r') as file:
-        data = json.load(file)
-        return data
+            for words in frequency_list:
+                print (words, frequency[words])
 
-def analyze_news():
-    for file in os.listdir("./"):
-        if file.endswith(".json"):
-            print('10 most usable words with length > 6 in file ', file, ':')
-            data = get_data(file)
-            get_ten_popular_words(data)
-            print('-----------------------------------------------------')
+define_encoding()
+get_data()
 
-
-analyze_news()
