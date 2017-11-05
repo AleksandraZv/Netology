@@ -1,9 +1,7 @@
 import json
 import chardet
-from pprint import pprint
 import os
 from collections import Counter, defaultdict
-import re
 
 
 def get_ten_popular_words(data):
@@ -13,11 +11,12 @@ def get_ten_popular_words(data):
         words.extend(news['description'].split(' '))
     freqword = defaultdict(list)
     for word, freq in Counter(words).items():
-        if (len(word) > 6):
+        if len(word) > 6:
             freqword[freq].append(word)
 
     for freq in sorted(freqword, reverse=True)[:10]:
-       print('count {}: {}'.format(freq, sorted(freqword[freq])))
+        print('count {}: {}'.format(freq, sorted(freqword[freq])))
+
 
 def get_data():
     with open('newsafr.json', 'rb') as f:
@@ -27,7 +26,9 @@ def get_data():
         data = json.load(file)
         return data
 
+
 def analyze_news():
+
     for file in os.listdir("./"):
         if file.endswith(".json"):
             print('10 most usable words with length > 6 in file ', file, ':')
